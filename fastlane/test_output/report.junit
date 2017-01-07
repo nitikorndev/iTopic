@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites name='iTopicUITests.xctest' tests='2' failures='0'>
+  <testsuite name='iTopicTests.LoginViewModelTests' tests='1' failures='0'>
+    <testcase classname='iTopicTests.LoginViewModelTests' name='testExample' time='0.001'/>
+  </testsuite>
+  <testsuite name='iTopicUITests.iTopicUITests' tests='1' failures='0'>
+    <testcase classname='iTopicUITests.iTopicUITests' name='testExample' time='5.830'/>
+  </testsuite>
+</testsuites>

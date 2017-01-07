@@ -1,0 +1,82 @@
+# More documentation about how to customize your build
+# can be found here:
+# https://docs.fastlane.tools
+fastlane_version "1.109.0"
+
+# This value helps us track success metrics for Fastfiles
+# we automatically generate. Feel free to remove this line
+# once you get things running smoothly!
+generated_fastfile_id "45796891-2a46-4598-85c4-6cdd92e75f04"
+
+default_platform :ios
+before_all do
+  ENV["CRASHLYTICS_API_TOKEN"] = "9dfe1b9799242baf1ad763a8ae7ec64f9273f989"
+  ENV["CRASHLYTICS_BUILD_SECRET"] = "ae31eccaef86e692ef84ec35573b51190a09b75fcd413352878f17e681ce46e7"
+end
+
+lane :beta do
+
+  cocoapods
+
+  increment_build_number
+
+  scan(scheme: "iTopic", device: "iPhone 6s")
+
+  # build your iOS app
+  gym(
+    scheme: "iTopic",
+    provisioning_profile_path: "ProvisioningProfiles/iTopic_Adhoc.mobileprovision",
+  )
+
+  # upload to Beta by Crashlytics
+  crashlytics(
+    api_token: ENV["CRASHLYTICS_API_TOKEN"],
+    build_secret: ENV["CRASHLYTICS_BUILD_SECRET"],
+    groups: 'Developer',
+    notifications: true
+  )
+
+  clean_build_artifacts
+
+  # commit git
+  build = Actions.lane_context[Actions::SharedValues::BUILD_NUMBER]
+  commit_version_bump(
+    message: "Build #{build}",
+    xcodeproj: "iTopic.xcodeproj",
+    force: true
+  )
+
+  add_git_tag
+  push_to_git_remote
+end
+
+lane :prod do
+
+  cocoapods
+
+  increment_build_number
+
+  scan(scheme: "iTopic", device: "iPhone 6s")
+
+  # build your iOS app
+  gym(
+    scheme: "iTopic",
+    provisioning_profile_path: "ProvisioningProfiles/iTopic_Store.mobileprovision",
+    include_bitcode: true
+  )
+
+  appstore
+
+  clean_build_artifacts
+
+  # commit git
+  build = Actions.lane_context[Actions::SharedValues::BUILD_NUMBER]
+  commit_version_bump(
+    message: "Release #{build}",
+    xcodeproj: "iTopic.xcodeproj",
+    force: true
+  )
+
+  add_git_tag
+  push_to_git_remote
+end

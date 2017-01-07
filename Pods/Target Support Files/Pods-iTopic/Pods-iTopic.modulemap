@@ -1,0 +1,6 @@
+framework module Pods_iTopic {
+  umbrella header "Pods-iTopic-umbrella.h"
+
+  export *
+  module * { export * }
+}
