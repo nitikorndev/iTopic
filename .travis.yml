@@ -4,5 +4,5 @@ xcode_workspace: iTopic.xcworkspace
 xcode_scheme: iTopic
 
 before_install:
- - gem install cocoapods
+ - gem install cocoapods --prerelease
  - pod install
