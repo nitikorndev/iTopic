@@ -1,5 +1,11 @@
 language: objective-c
-osx_image: xcode8.2
+osx_image: xcode8
 xcode_workspace: iTopic.xcworkspace
 xcode_project: iTopic.xcodeproj
 xcode_scheme: iTopicTests
+
+# cache: cocoapods
+# podfile: Example/Podfile
+before_install:
+ - gem install cocoapods
+ - pod install
