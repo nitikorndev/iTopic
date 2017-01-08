@@ -1,9 +1,8 @@
 language: objective-c
 osx_image: xcode8
-script:
-  - xctool -workspace iTopic.xcworkspace -scheme iTopic -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
-  - xctool test -workspace iTopic.xcworkspace -scheme iTopicTests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
-  
+xcode_workspace: iTopic.xcworkspace
+xcode_scheme: iTopicTests
+
 before_install:
  - gem install cocoapods
  - pod install
